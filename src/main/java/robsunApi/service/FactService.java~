@@ -9,12 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-
 @Service
 public class FactService {
 
-    public static HashMap<String, String> getAFact() {
+    public static String getAFact() {
         String url = System.getenv("FACT_URL");
         String key = System.getenv("KEY");
         String header = System.getenv("HEADER");
@@ -24,16 +22,18 @@ public class FactService {
             request.addHeader(header, key);
 
             try (CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode != 200) {
+                    System.out.println("Failed to fetch a fact. HTTP error code: " + statusCode);
+                    return "Failed to fetch a fact. HTTP error code: " + statusCode;
+                }
 
                 String responseBody = EntityUtils.toString(response.getEntity());
                 JSONArray jsonArray = new JSONArray(responseBody);
                 if (!jsonArray.isEmpty()) {
                     JSONObject factObject = jsonArray.getJSONObject(0);
-                    String fact = factObject.getString("fact");
-                    HashMap<String, String> factMap = new HashMap<>();
-                    factMap.put("fact", fact);
 
-                    return factMap;
+                    return factObject.getString("fact");
                 } else {
                     System.out.println("No facts found.");
                 }
@@ -41,7 +41,7 @@ public class FactService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return new HashMap<>();
+        return "";
     }
 
 }

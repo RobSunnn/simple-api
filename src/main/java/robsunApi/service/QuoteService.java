@@ -33,10 +33,10 @@ public class QuoteService {
                     JSONObject quoteObject = jsonArray.getJSONObject(0);
                     String quote = quoteObject.getString("quote");
                     String author = quoteObject.getString("author");
-                    HashMap<String, String> objectObjectHashMap = new HashMap<>();
-                    objectObjectHashMap.put(author, quote);
+                    HashMap<String, String> quoteMap = new HashMap<>();
+                    quoteMap.put(author, quote);
 
-                    return objectObjectHashMap;
+                    return quoteMap;
                 } else {
                     System.out.println("No quotes found.");
                 }
