@@ -16,10 +16,9 @@ public class QuoteService {
 
     public static HashMap<String, String> randomQuote() {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            String url = System.getenv("URL");
+            String url = System.getenv("QUOTE_URL");
             String key = System.getenv("KEY");
             String header = System.getenv("HEADER");
-            System.out.println(url +" " + key + " " +header);
 
             HttpGet request = new HttpGet(url);
             request.addHeader(header, key);

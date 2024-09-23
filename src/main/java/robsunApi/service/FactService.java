@@ -26,10 +26,14 @@ public class FactService {
             try (CloseableHttpResponse response = httpClient.execute(request)) {
 
                 String responseBody = EntityUtils.toString(response.getEntity());
+
+
                 JSONArray jsonArray = new JSONArray(responseBody);
                 if (!jsonArray.isEmpty()) {
                     JSONObject factObject = jsonArray.getJSONObject(0);
+
                     String fact = factObject.getString("fact");
+
                     HashMap<String, String> factMap = new HashMap<>();
                     factMap.put("fact", fact);
 
