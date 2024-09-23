@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 @Service
 public class HobbyGenerator {
-    private static final String HOBBY_API_URL = "";
 
     public static HashMap<String, String> giveIdeaForHobby() {
         String url = System.getenv("HOBBY_URL");
