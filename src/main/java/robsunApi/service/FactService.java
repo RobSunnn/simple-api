@@ -7,17 +7,19 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
 @Service
 public class FactService {
-
     public static HashMap<String, String> getAFact() {
         String url = System.getenv("FACT_URL");
         String key = System.getenv("KEY");
         String header = System.getenv("HEADER");
+        final Logger log = LoggerFactory.getLogger(FactService.class);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
@@ -31,7 +33,7 @@ public class FactService {
                 JSONArray jsonArray = new JSONArray(responseBody);
                 if (!jsonArray.isEmpty()) {
                     JSONObject factObject = jsonArray.getJSONObject(0);
-
+                    System.out.println("Test");
                     String fact = factObject.getString("fact");
 
                     HashMap<String, String> factMap = new HashMap<>();
