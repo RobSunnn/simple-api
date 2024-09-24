@@ -24,16 +24,15 @@ public class FactService {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
             request.addHeader(header, key);
+            log.info("Fetching a fact");
 
             try (CloseableHttpResponse response = httpClient.execute(request)) {
 
                 String responseBody = EntityUtils.toString(response.getEntity());
 
-
                 JSONArray jsonArray = new JSONArray(responseBody);
                 if (!jsonArray.isEmpty()) {
                     JSONObject factObject = jsonArray.getJSONObject(0);
-                    System.out.println("Test");
                     String fact = factObject.getString("fact");
 
                     HashMap<String, String> factMap = new HashMap<>();
@@ -41,11 +40,11 @@ public class FactService {
 
                     return factMap;
                 } else {
-                    System.out.println("No facts found.");
+                    log.warn("No facts found.");
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return new HashMap<>();
     }

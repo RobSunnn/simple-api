@@ -6,6 +6,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,10 +19,13 @@ public class HobbyGenerator {
         String url = System.getenv("HOBBY_URL");
         String key = System.getenv("KEY");
         String header = System.getenv("HEADER");
+        final Logger log = LoggerFactory.getLogger(HobbyGenerator.class);
+
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
             request.addHeader(header, key);
+            log.info("Getting random idea for hobby");
 
             try (CloseableHttpResponse response = httpClient.execute(request)) {
 
@@ -35,7 +40,7 @@ public class HobbyGenerator {
                 return hobbyMap;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return new HashMap<>();
     }

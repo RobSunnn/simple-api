@@ -7,6 +7,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,10 +21,12 @@ public class QuoteService {
             String url = System.getenv("QUOTE_URL");
             String key = System.getenv("KEY");
             String header = System.getenv("HEADER");
+            final Logger log = LoggerFactory.getLogger(QuoteService.class);
+
 
             HttpGet request = new HttpGet(url);
             request.addHeader(header, key);
-
+            log.info("Fetching a random quote");
             try (CloseableHttpResponse response = httpClient.execute(request)) {
 
                 String responseBody = EntityUtils.toString(response.getEntity());
@@ -37,11 +41,13 @@ public class QuoteService {
 
                     return quoteMap;
                 } else {
-                    System.out.println("No quotes found.");
+                    log.warn("No quotes found.");
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            final Logger log = LoggerFactory.getLogger(FactService.class);
+
+            log.error(e.getMessage());
         }
         return  new HashMap<>();
     }
