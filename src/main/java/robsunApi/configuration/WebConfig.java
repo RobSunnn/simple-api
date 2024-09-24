@@ -12,5 +12,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/weather")  // Allow CORS on the /weather endpoint
                 .allowedOrigins("https://robsunnn.github.io/")
                 .allowedMethods("POST");  // Allow POST requests
+
+        registry.addMapping("/sendEmail") // Allow CORS on the /sendEmail endpoint
+                .allowedOrigins("https://robsunnn.github.io/")
+                .allowedMethods("POST");  // Allow POST requests
     }
 }
