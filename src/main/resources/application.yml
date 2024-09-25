@@ -10,3 +10,16 @@ spring:
           auth: true
           starttls:
             enable: true
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+    springframework:
+      boot: DEBUG
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
