@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Email from Contact Form</title>
+    <style>
+        body {
+            font-family: Consolas, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: royalblue;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: royalblue;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: white;
+        }
+        p {
+            color: white;
+        }
+        span a {
+            color: moccasin !important;
+            font-size: 1.3em;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>New Contact Form Submission</h1>
+    <p><strong>Name:</strong> <span th:text="${name}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${email}"></span></p>
+    <p><strong>Message:</strong></p>
+    <p th:text="${message}"></p>
+    <div class="footer">
+        <p>This is your cool HTML email template!</p>
+    </div>
+</div>
+</body>
+</html>
