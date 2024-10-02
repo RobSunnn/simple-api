@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank you</title>
+    <style>
+        body {
+            font-family: Consolas, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: royalblue;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: royalblue;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: white;
+        }
+        p {
+            color: white;
+        }
+        span a {
+            color: moccasin !important;
+            font-size: 1.3em;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><strong>Hello, </strong> <span th:text="${name}"></span></h1>
+    <br><br>
+    <h2>Thank you for using my contact form. I will be in touch with you shortly.</h2>
+    <div class="footer">
+        <h3>Wish you all the best!</h3>
+    </div>
+</div>
+</body>
+</html>
