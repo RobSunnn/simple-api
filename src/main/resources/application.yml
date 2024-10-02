@@ -23,3 +23,9 @@ server:
     whitelabel:
       enabled: false
     path: /error
+
+azure:
+  storage:
+    account-name: ${AZURE_STORAGE_ACCOUNT_NAME}
+    account-key: ${AZURE_STORAGE_ACCOUNT_KEY}
+    container-name: ${AZURE_STORAGE_CONTAINER_NAME}
