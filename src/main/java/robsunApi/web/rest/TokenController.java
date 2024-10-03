@@ -1,4 +1,4 @@
-package robsunApi.web;
+package robsunApi.web.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

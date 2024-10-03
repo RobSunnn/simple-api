@@ -1,4 +1,4 @@
-package robsunApi.web;
+package robsunApi.web.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import robsunApi.domain.model.CityRequest;
 import robsunApi.service.TokenService;
 
-import static robsunApi.service.QuoteService.randomQuote;
 import static robsunApi.service.WeatherService.getWeatherInfo;
 
 @RestController

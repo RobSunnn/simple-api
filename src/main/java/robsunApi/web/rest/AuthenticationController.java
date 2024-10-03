@@ -1,7 +1,8 @@
-package robsunApi.web.contoller;
+package robsunApi.web.rest;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +21,7 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    //    @PreAuthorize("isAnonymous()")
+    @PreAuthorize("isAnonymous()")
     @GetMapping(value = "/login", produces = "text/html")
     public ModelAndView login() {
         return new ModelAndView("login");
@@ -36,15 +37,15 @@ public class AuthenticationController {
         return "login";
     }
 
-    //    @PreAuthorize("isAnonymous()")
+    @PreAuthorize("isAnonymous()")
     @GetMapping(value = "/register", produces = "text/html")
     public ModelAndView register() {
         return new ModelAndView("register");
     }
 
-    //    @PreAuthorize("isAnonymous()")
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registerUser(UserRegisterBM userRegisterBM) {
+    @PreAuthorize("isAnonymous()")
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterBM userRegisterBM) {
         authenticationService.registerUser(userRegisterBM);
         return ResponseEntity.ok("User registered successfully");
     }

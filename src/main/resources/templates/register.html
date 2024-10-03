@@ -1,10 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Register</title>
 </head>
 <body>
-$END$
+<form id="register-form" th:action="@{/users/register}" method="post">
+
+        <h2>Register</h2>
+        <div>
+            <label for="username" class="text-white">Username</label>
+            <input type="text" required minlength="2" maxlength="60" class="form-control" id="username"
+                 name="username"  placeholder="Enter your username...">
+            <small id="lastNameError" class="invalid-feedback text-white bg-danger rounded"></small>
+        </div>
+        <div class="input-field form-group">
+            <label for="email" class="text-white">Email address</label>
+            <input type="email" required minlength="5" maxlength="100" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                  name="email" class="form-control" id="email" placeholder="Enter your email...">
+            <small id="emailError" class="invalid-feedback text-white bg-danger rounded"></small>
+        </div>
+        <div class="input-field form-group">
+            <label for="password" class="text-white">Password</label>
+            <input type="password" required minlength="5" maxlength="60" class="form-control" id="password"
+                  name="password" placeholder="Enter password...">
+            <small id="passwordError" class="invalid-feedback text-white bg-danger rounded"></small>
+        </div>
+<!--        <div class="input-field form-group">-->
+<!--            <label for="confirmPassword" class="text-white">Confirm Password</label>-->
+<!--            <input type="password" required minlength="5" maxlength="60" class="form-control" id="confirmPassword"-->
+<!--                   placeholder="Confirm your password...">-->
+<!--            <small id="confirmPasswordError" class="invalid-feedback text-white bg-danger rounded"></small>-->
+<!--        </div>-->
+        <div class="buttons">
+            <button type="submit" id="register-button" class="btn btn-primary btn-lg">Register</button>
+        </div>
+
+</form>
+<script>
+    document.getElementById("register-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const csrfTokenElement = document.querySelector('input[name="_csrf"]');
+
+        const formData = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        };
+
+        fetch('/users/register', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfTokenElement.value,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful registration
+                    window.location.href = '/users/login';
+
+                    return response.json();
+                } else {
+                    throw new Error('Registration failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
 </body>
 </html>

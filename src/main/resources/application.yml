@@ -1,13 +1,18 @@
 spring:
-#  datasource:
-#    url: ${DATABASE_URL}
-#    username: ${DATABASE_USERNAME}
-#    password: ${DB_PASS}
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
+  datasource:
+    url: "jdbc:mysql://${HOST:localhost}:${PORT:3306}/${DATABASE:test}?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    username: ${DATABASE_USERNAME:root}
+    password: ${DB_PASS:1234}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   mail:
     host: ${SMTP_HOST}
     port: ${SMTP_PORT}
@@ -32,3 +37,12 @@ server:
     whitelabel:
       enabled: false
     path: /error
+  thymeleaf: # Thymeleaf
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+    resources: # Static resources
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0

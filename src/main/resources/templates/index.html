@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+    <style>
+        a {
+            border: 2px solid black;
+            color: black;
+            padding: 1em;
+        }
+    </style>
 </head>
+
 <body>
-<h1>Welcome to my simple API</h1>
+<div sec:authorize="isAnonymous()">
+    <h1>Welcome to my simple API</h1>
+    <a href="/users/register">Register</a>
+    <a href="/users/login">Login</a>
+</div>
+<h1 sec:authorize="isAuthenticated()">Welcome to my simple API,
+    <span  class="text-white">
+        <th:block th:text="${#authentication.principal.username}"></th:block>
+    </span>
+</h1>
 </body>
 </html>

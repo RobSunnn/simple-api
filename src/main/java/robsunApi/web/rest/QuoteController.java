@@ -1,4 +1,4 @@
-package robsunApi.web;
+package robsunApi.web.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import robsunApi.service.TokenService;
 
-import java.util.Map;
-
-import static robsunApi.service.HobbyGenerator.giveIdeaForHobby;
 import static robsunApi.service.QuoteService.randomQuote;
 
 @RestController
