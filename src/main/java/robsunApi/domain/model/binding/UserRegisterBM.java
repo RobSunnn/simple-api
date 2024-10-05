@@ -1,6 +1,27 @@
 package robsunApi.domain.model.binding;
 
-public record UserRegisterBM(String username, String email, String password) {
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public record UserRegisterBM(
+        @Size(min = 5, max = 20)
+        @NotNull
+        @NotBlank
+        String username,
+        @Size(min = 5, max = 200)
+        @NotNull
+        @NotBlank
+        String email,
+        @NotNull
+        @NotBlank
+        String password,
+
+        @NotNull
+        @NotBlank
+        String confirmPassword
+) {
     @Override
     public String username() {
         return username;
@@ -14,5 +35,10 @@ public record UserRegisterBM(String username, String email, String password) {
     @Override
     public String password() {
         return password;
+    }
+
+    @Override
+    public String confirmPassword() {
+        return confirmPassword;
     }
 }

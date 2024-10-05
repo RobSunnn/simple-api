@@ -1,6 +1,7 @@
 package robsunApi.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,9 +10,16 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
+    @Size(min = 5, max = 20)
+    @Column(nullable = false)
     private String username;
+    @Size(min = 5, max = 200)
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String apiToken;
 
     @ManyToMany(fetch = FetchType.EAGER)
