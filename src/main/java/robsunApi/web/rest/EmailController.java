@@ -1,8 +1,10 @@
 package robsunApi.web.rest;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import robsunApi.domain.model.EmailRequest;
 import robsunApi.service.EmailService;
 import robsunApi.service.TokenService;
@@ -12,11 +14,10 @@ import robsunApi.service.TokenService;
 public class EmailController {
 
     private final EmailService emailService;
-    private final TokenService tokenService;
 
-    public EmailController(EmailService emailService, TokenService tokenService) {
+
+    public EmailController(EmailService emailService) {
         this.emailService = emailService;
-        this.tokenService = tokenService;
     }
 
     @PostMapping("/sendMail")
