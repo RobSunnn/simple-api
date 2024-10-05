@@ -24,7 +24,9 @@ public class WebSecurityConfiguration {
         httpSecurity
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/users/register", "/users/login", "/users/login-error", "/csrf-token").permitAll()
+                        .requestMatchers("/", "/users/register", "/users/login",
+                                "/users/login-error", "/csrf-token",
+                                "/store-token", "/remove-token").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
