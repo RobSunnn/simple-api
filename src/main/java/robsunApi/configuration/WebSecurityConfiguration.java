@@ -21,33 +21,28 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-
         httpSecurity
-                .authorizeHttpRequests(
-                        authorizeRequests -> authorizeRequests
-                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/", "/users/register",
-                                        "/users/login", "/users/login-error",
-                                        "/csrf-token").permitAll()
-                                .anyRequest().authenticated()
-                ).cors(
-                        cors -> cors.configurationSource(corsConfigurationSource())
-                ).csrf(
-                        csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                ).formLogin(
-                        formLogin -> formLogin
-                                .loginPage("/users/login")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                                .defaultSuccessUrl("/")
-                                .failureForwardUrl("/users/login-error")
-                ).logout(
-                        logout -> logout.logoutUrl("/logout")
-                                .logoutSuccessUrl("/")
-                                .deleteCookies("JSESSIONID")
-                                .clearAuthentication(true)
-                                .invalidateHttpSession(true)
-                                .permitAll()
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/", "/users/register", "/users/login", "/users/login-error", "/csrf-token").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/users/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/")
+                        .failureForwardUrl("/users/login-error")
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .permitAll()
                 );
 
         return httpSecurity.build();
@@ -56,7 +51,7 @@ public class WebSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://robsunnn.github.io/"));
+        configuration.setAllowedOrigins(List.of("https://robsunnn.github.io")); // Corrected
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "X-CSRF-TOKEN", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -66,4 +61,6 @@ public class WebSecurityConfiguration {
 
         return source;
     }
+
+
 }
