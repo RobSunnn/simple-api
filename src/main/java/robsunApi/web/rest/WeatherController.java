@@ -17,15 +17,10 @@ public class WeatherController {
     }
 
     @PostMapping("/weather")
-    public ResponseEntity<String> getWeather(@RequestHeader("x-api-token") String token, @RequestBody CityRequest cityRequest) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            String city = cityRequest.getCity();
-            String weatherData = getWeatherInfo(city);
-            return ResponseEntity.ok(weatherData);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
+    public ResponseEntity<String> getWeather(@RequestBody CityRequest cityRequest) {
+        String city = cityRequest.getCity();
+        String weatherData = getWeatherInfo(city);
+        return ResponseEntity.ok(weatherData);
     }
 }
 

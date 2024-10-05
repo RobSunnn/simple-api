@@ -19,13 +19,8 @@ public class HobbyController {
     }
 
     @GetMapping("/hobby")
-    public ResponseEntity<?> getHobby(@RequestHeader("x-api-token") String token) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            return ResponseEntity.ok(giveIdeaForHobby());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
+    public ResponseEntity<?> getHobby() {
+        return ResponseEntity.ok(giveIdeaForHobby());
     }
 
 }

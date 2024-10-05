@@ -20,13 +20,8 @@ public class QuoteController {
 
 
     @GetMapping("/quote")
-    public ResponseEntity<?> getQuote(@RequestHeader("x-api-token") String token) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            return ResponseEntity.ok(randomQuote());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
+    public ResponseEntity<?> getQuote() {
+        return ResponseEntity.ok(randomQuote());
     }
 
 }

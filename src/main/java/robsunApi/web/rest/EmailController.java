@@ -20,13 +20,9 @@ public class EmailController {
     }
 
     @PostMapping("/sendMail")
-    public ResponseEntity<?> sendEmail(@RequestHeader("x-api-token") String token, @RequestBody EmailRequest emailRequest) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            emailService.sendContactForm(emailRequest.getName(), emailRequest.getUserEmail(), emailRequest.getMessageContent());
-            return ResponseEntity.ok("Email sent successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
+    public ResponseEntity<?> sendEmail(@RequestBody EmailRequest emailRequest) {
+
+        emailService.sendContactForm(emailRequest.getName(), emailRequest.getUserEmail(), emailRequest.getMessageContent());
+        return ResponseEntity.ok("Email sent successfully!");
     }
 }

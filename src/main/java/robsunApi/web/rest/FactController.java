@@ -19,12 +19,7 @@ public class FactController {
     }
 
     @GetMapping("/fact")
-    public ResponseEntity<?> getFact(@RequestHeader("x-api-token") String token) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            return ResponseEntity.ok(getAFact());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
+    public ResponseEntity<?> getFact() {
+        return ResponseEntity.ok(getAFact());
     }
 }

@@ -25,8 +25,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/users/register", "/users/login",
-                                "/users/login-error", "/csrf-token",
-                                "/store-token", "/remove-token").permitAll()
+                                "/users/login-error", "/csrf-token").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -53,7 +52,7 @@ public class WebSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://robsunnn.github.io")); // Corrected
+        configuration.setAllowedOrigins(List.of("https://robsunnn.github.io"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "X-CSRF-TOKEN", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -63,6 +62,5 @@ public class WebSecurityConfiguration {
 
         return source;
     }
-
 
 }
