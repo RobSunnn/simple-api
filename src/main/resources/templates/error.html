@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Error page</title>
+    <title>Error - Something Went Wrong</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/error.css">
 </head>
 <body>
-<h1>Sorry something bad happened...</h1>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="error-container">
+    <h1>Oops!</h1>
+    <p>Something went wrong. We are working on it!</p>
+    <p>If you need immediate assistance, please contact support.</p>
+    <a href="/" th:href="@{/}">Return to Home</a>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

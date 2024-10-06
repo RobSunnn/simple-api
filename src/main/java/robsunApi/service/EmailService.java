@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -31,6 +32,7 @@ public class EmailService {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
+    @Async
     public void sendContactForm(String name, String userEmail, String messageContent) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -55,6 +57,7 @@ public class EmailService {
             log.error(e.getMessage());
         }
     }
+
 
     private void sendContactFormRespond(String userEmail, String name) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -93,7 +96,7 @@ public class EmailService {
     }
 
     @EventListener(ContactRequestEvent.class)
-    private void onContactRequestEvent(ContactRequestEvent event) {
+    protected void onContactRequestEvent(ContactRequestEvent event) {
         sendContactFormRespond(event.getEmail(), event.getName());
     }
 }

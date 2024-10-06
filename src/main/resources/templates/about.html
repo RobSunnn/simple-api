@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>About Us</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<style>
+    .about-wrapper {
+        display: flex;
+    }
+</style>
+<body>
+
+<!-- Include the reusable navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="about-wrapper">
+    <!-- About section -->
+    <div class="about-section">
+        <h1>About Our App</h1>
+        <p>Welcome to our app! We are building something amazing to bring the best experience for our users.
+            Our mission is to simplify the way you access information and make your daily tasks easier.</p>
+        <p>Stay tuned for exciting updates!</p>
+
+        <div class="under-development">
+            <p>This app is still under development. We're working hard to add all the information you need.
+                The full version will be available soon, so check back with us for updates!</p>
+        </div>
+    </div>
+
+    <!-- Roadmap section -->
+    <div class="roadmap">
+        <h2>Our Development Roadmap</h2>
+        <ul>
+            <li>Login and Registration System</li>
+            <li>Profile Management</li>
+            <li>Data Analytics Dashboard</li>
+            <li>Enhanced Security Features</li>
+            <li>Mobile App Support</li>
+        </ul>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

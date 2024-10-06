@@ -1,0 +1,27 @@
+.wrapper {
+    width: 60%;
+    margin: 3em auto;
+}
+
+.buttons {
+    margin-top: 1em;
+}
+
+.input-field {
+    margin-top: 0.5em;
+}
+
+#register-form {
+    margin: 0 auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+#register-form h2,
+#register-form .buttons {
+    text-align: center;
+}

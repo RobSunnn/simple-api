@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-<h2>Login</h2>
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <form th:action="@{/users/login}" method="post">
+    <h1>Login</h1>
     <div>
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" required>
@@ -19,8 +24,7 @@
         <button type="submit">Login</button>
     </div>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 
-<!--<p th:if="${param.error}">Invalid username or password</p>-->
-<!--<p th:if="${param.logout}">You have been logged out successfully</p>-->
 </body>
 </html>

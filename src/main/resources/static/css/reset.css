@@ -1,0 +1,84 @@
+/* Reset CSS */
+/* Remove all default margins, paddings, and borders */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* Set a modern box model where width includes padding and border */
+html {
+    box-sizing: border-box;
+}
+
+/* Apply box-sizing to all elements */
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+/* Remove default block styling on common elements */
+body, h1, h2, h3, h4, h5, h6, p, ol, ul, figure, blockquote, hr {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+/* Remove list styles on ul, ol elements with a class of list */
+ul, ol {
+    list-style: none;
+}
+
+/* Remove default link styles */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Remove default table spacing */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Remove quotes before and after blockquotes in Firefox */
+blockquote::before, blockquote::after,
+q::before, q::after {
+    content: '';
+}
+
+/* Remove default button styles */
+button, input {
+    border: none;
+    background: none;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-font-smoothing: antialiased;
+}
+
+small {
+    text-align: center;
+    font-size: 1.1em !important;
+}
+
+/* Allow responsive scaling */
+img, video {
+    max-width: 100%;
+    height: auto;
+}

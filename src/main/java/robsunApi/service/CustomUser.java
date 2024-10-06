@@ -6,23 +6,22 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 public class CustomUser extends User {
-    private String username;
+    private String name;
 
     public CustomUser(
-            String email,
+            String username,
             String password,
             Collection<? extends GrantedAuthority> authorities,
-            String username) {
-        super(email, password, authorities);
-        this.username = username;
+            String name) {
+        super(username, password, authorities);
+        this.name = name;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- Include the reusable navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Contact section -->
+<div class="contact-section">
+    <h1>Contact Us</h1>
+    <p>If you have any questions or feedback, please reach out to us using the form below.
+        We look forward to hearing from you!</p>
+
+    <!-- Contact form -->
+    <form action="/sendMail" method="post" class="contact-form">
+        <label for="name"></label>
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <label for="email"></label>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <label for="message"></label>
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+<script src="/js/token.js"></script>
+<script src="/js/sendMail.js"></script>
+</body>
+</html>

@@ -1,10 +1,14 @@
 package robsunApi.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import robsunApi.domain.entity.UserEntity;
 import robsunApi.domain.entity.enums.RoleEnum;
 import robsunApi.domain.model.binding.UserRegisterBM;
+import robsunApi.domain.model.view.UserView;
 import robsunApi.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -50,4 +54,20 @@ public class AuthenticationService {
                 .setCreated(LocalDateTime.now());
     }
 
+    public UserView findUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        UserEntity user = findUser(userEmail);
+
+        return mapAsUserView(user);
+    }
+
+    private UserView mapAsUserView(UserEntity user) {
+        return new UserView(user.getUsername(), user.getEmail(), user.getApiToken());
+    }
+
+    private UserEntity findUser(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
+    }
 }
