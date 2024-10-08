@@ -13,7 +13,7 @@
 <body>
 
 <!-- Include the reusable navbar -->
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="about-wrapper">
     <!-- About section -->
@@ -42,6 +42,6 @@
     </div>
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

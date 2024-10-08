@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/error.css">
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="error-container">
     <h1>Oops!</h1>
@@ -15,7 +15,7 @@
     <p>If you need immediate assistance, please contact support.</p>
     <a href="/" th:href="@{/}">Return to Home</a>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

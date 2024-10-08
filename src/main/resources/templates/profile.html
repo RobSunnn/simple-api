@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="profile-card" th:object="${userDetails}">
 <!--  <img src="https://via.placeholder.com/150" alt="User Profile Picture">-->
@@ -16,7 +16,7 @@
   <p>Api Token: <span th:text="${userDetails.apiToken()}">User Token</span></p>
 <!--  <a href="/users/edit" th:href="@{/users/edit}">Edit Profile</a>-->
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

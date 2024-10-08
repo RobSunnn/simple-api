@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="wrapper">
     <form id="register-form">
@@ -40,7 +40,7 @@
         </div>
     </form>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 <script>
     document.getElementById("register-form").addEventListener("submit", (e) => {

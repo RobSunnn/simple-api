@@ -7,7 +7,7 @@
 <body>
 
 <!-- Include the reusable navbar -->
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <!-- Contact section -->
 <div class="contact-section">
@@ -26,7 +26,7 @@
         <button type="submit">Send Message</button>
     </form>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 <script src="/js/token.js"></script>
 <script src="/js/sendMail.js"></script>
 </body>
