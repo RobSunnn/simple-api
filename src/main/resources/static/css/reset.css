@@ -13,6 +13,7 @@
 /* Set a modern box model where width includes padding and border */
 html {
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 /* Apply box-sizing to all elements */
@@ -64,9 +65,6 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-font-smoothing: antialiased;
@@ -81,4 +79,22 @@ small {
 img, video {
     max-width: 100%;
     height: auto;
+}
+
+.wrapper {
+    width: 100%;
+    margin: 10em auto;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-height: 992px) {
+    body {
+        min-height: 150vh;
+        align-items: flex-start;
+    }
+
+    .wrapper {
+        margin: 5em auto;
+    }
 }

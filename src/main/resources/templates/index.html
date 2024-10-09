@@ -13,19 +13,21 @@
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div sec:authorize="isAnonymous()" class="welcome">
-    <h1>Welcome to my simple API</h1>
-    <div class="buttons">
-        <a href="/users/register">Register</a>
-        <a href="/users/login">Login</a>
+<div class="wrapper">
+    <div sec:authorize="isAnonymous()" class="welcome">
+        <h1>Welcome to my simple API</h1>
+        <div class="buttons">
+            <a href="/users/register">Register</a>
+            <a href="/users/login">Login</a>
+        </div>
     </div>
-</div>
 
-<h1 sec:authorize="isAuthenticated()">Welcome to my simple API,
-    <span class="text-white">
+    <h1 sec:authorize="isAuthenticated()">Welcome to my simple API,
+        <span class="text-white">
         <th:block th:text="${#authentication.principal.name}"></th:block>
     </span>
-</h1>
+    </h1>
+</div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 

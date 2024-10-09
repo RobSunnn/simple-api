@@ -56,3 +56,9 @@
         font-size: 0.9rem;
     }
 }
+
+@media (max-height: 992px) {
+    .profile-card {
+        margin-top: 5em;
+    }
+}
