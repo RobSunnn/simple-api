@@ -34,10 +34,13 @@ public class BlogController {
     }
 
     @GetMapping
-    public String getAllPosts(Model model,
-                              @PageableDefault(size = 3) Pageable pageable) {
+    public String getAllPosts(
+            Model model,
+            @PageableDefault(size = 3) Pageable pageable
+    ) {
         Page<PostEntity> page = postService.getAllPosts(pageable);
         model.addAttribute("posts", page.getContent());
+        model.addAttribute("totalElements", page.getTotalElements());
         model.addAttribute("currentPage", page.getNumber());
         model.addAttribute("totalPages", page.getTotalPages());
         return "blog-page";
