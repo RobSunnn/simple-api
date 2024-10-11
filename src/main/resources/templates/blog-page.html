@@ -4,22 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roberto's Blog</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(120deg, #f6d365, #fda085);
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
 
         .container {
-            width: 90%;
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1500px;
+            margin: 5em auto;
         }
 
         header {
@@ -36,18 +27,24 @@
         .articles {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             gap: 20px;
             margin-bottom: 40px;
         }
 
         .article {
-            background: #fff;
+            background: #5a67d8;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             width: calc(33% - 20px);
             min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 50vh;
         }
 
         .article:hover {
@@ -56,19 +53,21 @@
         }
 
         .article img {
-            width: 100%;
+            width: 50vw;
+            height: 20vh;
             border-radius: 10px;
         }
 
         .article h2 {
             margin-top: 15px;
-            font-size: 1.5rem;
-            color: #333;
+            font-size: 2rem;
+            color: whitesmoke;
         }
 
         .article p {
             margin: 10px 0;
-            color: #555;
+            color: whitesmoke;
+            word-break: break-word;
         }
 
         .article a {
@@ -87,6 +86,9 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: 0 auto 10em auto;
+            text-align: center;
         }
 
         .create-post h2 {
@@ -129,10 +131,48 @@
             background-color: #f6d365;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pagination ul {
+            display: flex;
+            margin: 1.5em auto;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fda085;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #fda085;
             color: #fff;
+        }
+
+        .pagination .active a {
+            background-color: #fda085;
+            color: white;
+            border: 1px solid #fda085;
+        }
+
+        .pagination .disabled a {
+            color: #ccc;
+            pointer-events: none;
+            border: 1px solid #ccc;
         }
 
         @media (max-width: 768px) {
@@ -153,30 +193,55 @@
     <!-- Articles Section -->
     <div class="articles">
         <div th:each="post : ${posts}" class="article">
+            <!-- Check if the post has an associated image -->
             <div th:if="${post.image != null}">
-                <img th:src="@{${post.image.filePath}}" alt="Article Image"> <!-- Use filePath here -->
+                <!-- Use the controller endpoint to serve the image -->
+                <img th:src="@{/images/{id}(id=${post.id})}" alt="Article Image">
             </div>
+
+            <!-- Display the post title -->
             <h2 th:text="${post.title}">Article Title</h2>
-            <p th:text="${post.content}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent id dolor nec lorem aliquam consequat.</p>
+
+            <!-- Display the post content -->
+            <p th:text="${#strings.length(post.content) > 90 ? #strings.substring(post.content, 0, 90) + '...' : post.content}"></p>
+
+            <!-- Link to the full post (read more) -->
             <a th:href="@{/blog/{id}(id=${post.id})}">Read More</a>
         </div>
+    </div>
+
+    <!-- Pagination Section Below Articles -->
+    <div class="pagination">
+        <ul>
+            <li th:classappend="${currentPage == 0} ? 'disabled'">
+                <a th:href="@{/blog(page=${currentPage - 1})}">Previous</a>
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${currentPage == i} ? 'active'">
+                <a th:text="${i + 1}" th:href="@{/blog(page=${i})}"></a>
+            </li>
+
+            <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a th:href="@{/blog(page=${currentPage + 1})}">Next</a>
+            </li>
+        </ul>
     </div>
 
     <!-- Form to Create a New Post -->
     <div class="create-post">
         <h2>Create a New Post</h2>
-        <form action="/blog/create-post" method="POST" enctype="multipart/form-data">
-            <input type="text" name="title" placeholder="Post Title" required>
-            <textarea name="content" rows="5" placeholder="Post Content" required></textarea>
-            <input type="file" name="image" accept="image/*" required>
+        <form th:action="@{/blog/create-post}" th:object="${postBindingModel}" method="post"
+              enctype="multipart/form-data">
+            <input type="text" th:field="*{title}" placeholder="Post Title" required>
+            <textarea th:field="*{content}" rows="5" placeholder="Post Content" required></textarea>
+            <input type="file" th:field="*{file}" accept="image/*" required>
             <button type="submit">Publish Post</button>
         </form>
     </div>
 
-
-    <div th:replace="~{fragments/footer :: footer}"></div>
-
 </div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

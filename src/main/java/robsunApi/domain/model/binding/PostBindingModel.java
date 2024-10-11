@@ -6,7 +6,9 @@ public class PostBindingModel {
 
     private String title;
     private String content;
+    private MultipartFile file;
 
+    // Getters and Setters
     public String getTitle() {
         return title;
     }
@@ -21,5 +23,13 @@ public class PostBindingModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 }
