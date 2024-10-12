@@ -38,7 +38,7 @@ public class BlogController {
             Model model,
             @PageableDefault(size = 3) Pageable pageable
     ) {
-        Page<PostEntity> page = postService.getAllPosts(pageable);
+        Page<PostEntity> page = postService.getAllApprovedPosts(pageable);
         model.addAttribute("posts", page.getContent());
         model.addAttribute("totalElements", page.getTotalElements());
         model.addAttribute("currentPage", page.getNumber());

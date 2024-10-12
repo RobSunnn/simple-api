@@ -9,12 +9,6 @@
 
     <style>
 
-        .container {
-            width: 100%;
-            max-width: 1500px;
-            margin: 5em auto;
-        }
-
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -26,6 +20,32 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
+        .welcome-message {
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center; /* Center-align the text */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+
+        .welcome-message h2 {
+            color: #ffffff; /* White text for the header */
+            font-size: 2em; /* Larger font for the title */
+            margin-bottom: 10px; /* Space below the header */
+        }
+
+        .welcome-message p {
+            color: #e0e0e0; /* Slightly off-white for paragraph text */
+            font-size: 1.1em; /* Slightly larger font for readability */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: 5em auto;
+        }
+
         .articles {
             display: flex;
             flex-wrap: wrap;
@@ -35,7 +55,6 @@
         }
 
         .article {
-            background: #5a67d8;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -58,6 +77,7 @@
             width: 50vw;
             height: 20vh;
             border-radius: 10px;
+            border: 3px solid white;
         }
 
         .article h2 {
@@ -71,7 +91,6 @@
             color: whitesmoke;
             word-break: break-word;
             padding: 0.6em;
-            background: royalblue;
             text-align: center;
             width: 100%;
             border-radius: 10px;
@@ -200,8 +219,16 @@
 
 <div class="container">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="welcome-message">
+        <h2>Welcome to My Blog Channel!</h2>
+        <p>🌟 Explore a world of ideas, insights, and inspiration. Dive into the latest posts and join the conversation!</p>
+        <p>🖊️ Whether you're here for tips, stories, or a bit of fun, I hope you find something that resonates with you.</p>
+        <p>📩 Don't forget to subscribe to stay updated on all the new content!</p>
+    </div>
+
     <header>
-        <h1>You can leave your story here</h1>
+        <h1>You can leave your story here if you want</h1>
     </header>
 
     <!-- Articles Section -->

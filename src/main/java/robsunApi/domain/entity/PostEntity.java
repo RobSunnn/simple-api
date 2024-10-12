@@ -1,7 +1,6 @@
 package robsunApi.domain.entity;
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "posts")
@@ -16,8 +15,7 @@ public class PostEntity extends BaseEntity {
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private ImageEntity image;
 
-    @Transient
-    private MultipartFile file;
+    private boolean approved;
 
     public String getTitle() {
         return title;
@@ -43,11 +41,11 @@ public class PostEntity extends BaseEntity {
         this.image = image;
     }
 
-    public MultipartFile getFile() {
-        return file;
+    public boolean isApproved() {
+        return approved;
     }
 
-    public void setFile(MultipartFile file) {
-        this.file = file;
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

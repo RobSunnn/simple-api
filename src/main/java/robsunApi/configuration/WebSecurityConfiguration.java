@@ -28,6 +28,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/", "/users/register", "/users/login",
                                 "/users/login-error", "/sendMail", "/fact", "/hobby", "/quote", "/weather",
                                 "/store-token", "/remove-token", "/about", "/contact", "/blog/**", "/error").permitAll()
+                        .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
