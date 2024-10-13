@@ -40,7 +40,7 @@
             font-size: 1.1em; /* Slightly larger font for readability */
         }
 
-        .container {
+        .page-wrapper {
             width: 100%;
             max-width: 1500px;
             margin: 5em auto;
@@ -65,7 +65,8 @@
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
-            height: 50vh;
+            min-height: 700px;
+            border: 3px solid white;
         }
 
         .article:hover {
@@ -95,6 +96,8 @@
             width: 100%;
             border-radius: 10px;
             min-height: 100px;
+            border: 3px solid white;
+
         }
 
         .article a {
@@ -216,42 +219,25 @@
     </style>
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-
+<div class="page-wrapper">
     <div class="welcome-message">
         <h2>Welcome to My Blog Channel!</h2>
         <p>🌟 Explore a world of ideas, insights, and inspiration. Dive into the latest posts and join the conversation!</p>
         <p>🖊️ Whether you're here for tips, stories, or a bit of fun, I hope you find something that resonates with you.</p>
         <p>📩 Don't forget to subscribe to stay updated on all the new content!</p>
     </div>
-
-    <header>
-        <h1>You can leave your story here if you want</h1>
-    </header>
-
-    <!-- Articles Section -->
     <div class="articles">
         <div th:each="post : ${posts}" class="article">
-            <!-- Check if the post has an associated image -->
             <div th:if="${post.image != null}">
-                <!-- Use the controller endpoint to serve the image -->
                 <img th:src="@{/images/{id}(id=${post.id})}" alt="Article Image">
             </div>
-
-            <!-- Display the post title -->
-            <h2 th:text="${post.title}">Article Title</h2>
-
-            <!-- Display the post content -->
+            <h2 th:text="${#strings.length(post.title) > 40 ? #strings.substring(post.title, 0, 40) + '...' : post.title}">Article Title</h2>
             <p th:text="${#strings.length(post.content) > 90 ? #strings.substring(post.content, 0, 90) + '...' : post.content}"></p>
-
-            <!-- Link to the full post (read more) -->
-            <a th:href="@{/blog/{id}(id=${post.id})}">Read More</a>
-        </div>
+            <a th:href="@{/blog/{id}(id=${post.id})}">Read More &rarr;</a>        </div>
     </div>
 
-    <!-- Pagination Section Below Articles -->
     <div th:if="${totalElements > 3}" class="pagination">
         <ul>
             <li th:classappend="${currentPage == 0} ? 'disabled'">
@@ -269,13 +255,19 @@
         </ul>
     </div>
 
-    <!-- Form to Create a New Post -->
+    <header>
+        <h1>You can leave your story here if you want</h1>
+    </header>
     <div class="create-post">
         <h2>Create a New Post</h2>
         <form th:action="@{/blog/create-post}" th:object="${postBindingModel}" method="post"
               enctype="multipart/form-data">
-            <input type="text" th:field="*{title}" placeholder="Post Title" required>
-            <textarea th:field="*{content}" rows="5" placeholder="Post Content" required></textarea>
+            <label>
+                <input type="text" th:field="*{title}" placeholder="Post Title" required minlength="2" maxlength="245">
+            </label>
+            <label>
+                <textarea th:field="*{content}" rows="5" placeholder="Post Content" required minlength="2"></textarea>
+            </label>
             <input type="file" th:field="*{file}" accept="image/*" required>
             <button type="submit">Publish Post</button>
         </form>
