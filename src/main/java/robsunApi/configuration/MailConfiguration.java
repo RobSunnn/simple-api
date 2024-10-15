@@ -11,7 +11,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableAsync
-public class MailConfig {
+public class MailConfiguration {
 
     @Value("${spring.mail.host}")
     private String mailHost;

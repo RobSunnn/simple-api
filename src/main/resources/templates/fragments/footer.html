@@ -4,6 +4,14 @@
             <a href="https://github.com/RobSunnn" target="_blank">GitHub</a>
             <a href="https://www.linkedin.com/in/roberto-spasov/" target="_blank">LinkedIn</a>
         </div>
+        <div class="subscribe-wrapper">
+            <h3>Subscribe to our newsletter</h3>
+            <form class="subscribe-form-and-btn" th:action="@{/add-subscriber}" th:method="POST">
+                <label for="subscribe-form"></label>
+                <input type="text" name="subscriberEmail" id="subscribe-form">
+                <button type="submit" class="btn btn-success">Subscribe</button>
+            </form>
+        </div>
         <p class="footer-copyright">© 2024 All rights reserved.</p>
     </div>
 </footer>
