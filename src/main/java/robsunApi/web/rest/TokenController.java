@@ -23,12 +23,4 @@ public class TokenController {
         tokenService.addToken(token); // Add token to the service
         return ResponseEntity.ok("Token stored successfully.");
     }
-
-    @PostMapping("/remove-token")
-    public ResponseEntity<?> removeToken(@RequestBody Map<String, String> body) {
-        String token = body.get("token");
-        tokenService.removeToken(token); // Remove token from the service
-        return ResponseEntity.ok("Token removed successfully.");
-    }
-
 }
