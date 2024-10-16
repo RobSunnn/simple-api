@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import robsunApi.domain.entity.TokenEntity;
 import robsunApi.domain.entity.UserEntity;
 import robsunApi.domain.entity.enums.RoleEnum;
 import robsunApi.domain.model.binding.UserRegisterBM;
@@ -31,7 +32,8 @@ public class AuthenticationService {
 
     public void registerUser(UserRegisterBM userRegisterBM) {
         UserEntity user = mapToUser(userRegisterBM);
-        tokenService.addToken(user.getApiToken());
+        String userToken = generateUserToken(); // Generate a user token
+        user.setApiToken(userToken); // Set the generated token to the user entity
 
         if (roleService.getCount() == 0) {
             roleService.initRoles();
@@ -45,6 +47,15 @@ public class AuthenticationService {
         userRepository.save(user);
     }
 
+
+    public UserView findUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        UserEntity user = findUser(userEmail);
+
+        return mapAsUserView(user);
+    }
+
     private UserEntity mapToUser(UserRegisterBM userRegisterBM) {
         return new UserEntity()
                 .setUsername(userRegisterBM.username())
@@ -54,13 +65,16 @@ public class AuthenticationService {
                 .setCreated(LocalDateTime.now());
     }
 
-    public UserView findUserDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
-        UserEntity user = findUser(userEmail);
-
-        return mapAsUserView(user);
+    private String generateUserToken() {
+        String token = UUID.randomUUID().toString();
+        TokenEntity tokenEntity = new TokenEntity();
+        tokenEntity.setToken(token);
+        tokenEntity.setCreatedAt(LocalDateTime.now());
+        tokenEntity.setGuest(false);
+        tokenService.addToken(tokenEntity);
+        return token;
     }
+
 
     private UserView mapAsUserView(UserEntity user) {
         return new UserView(user.getUsername(), user.getEmail(), user.getApiToken());
