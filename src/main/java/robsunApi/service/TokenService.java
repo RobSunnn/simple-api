@@ -4,16 +4,12 @@ import org.springframework.stereotype.Service;
 import robsunApi.domain.entity.TokenEntity;
 import robsunApi.repository.TokenRepository;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class TokenService {
 
     private final TokenRepository tokenRepository;
-    private final Set<String> validTokens = Collections.synchronizedSet(new HashSet<>());
 
     public TokenService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;

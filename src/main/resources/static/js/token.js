@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     sessionStorage.setItem('apiToken', token);
 
     // Store the token on the server
-    fetch('https://robsunnn-api.azurewebsites.net/store-token', {
+    fetch('http://localhost:8080/store-token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ window.addEventListener("beforeunload", function () {
     const token = sessionStorage.getItem('apiToken');
 
     if (token) {
-        fetch('https://robsunnn-api.azurewebsites.net/remove-token', {
+        fetch('http://localhost:8080/remove-token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 package robsunApi.domain.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -9,10 +10,13 @@ import java.time.LocalDate;
 @Table(name = "subscribers")
 public class SubscriberEntity extends BaseEntity {
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private LocalDate subscriptionTime;
 
+    @Column(nullable = false)
     private int subscriptionCount;
 
     public SubscriberEntity() {}

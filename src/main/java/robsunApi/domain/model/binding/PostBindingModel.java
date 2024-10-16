@@ -13,14 +13,15 @@ public class PostBindingModel {
     @Size(min = 2, max = 200)
     @Pattern(regexp = "^[A-Za-z0-9 ]+$", message = "Title must only contain letters, numbers, and spaces.")
     private String title;
+
     @NotBlank
     @Lob
     @Size(min = 2)
     private String content;
+
     @NotNull
     private MultipartFile file;
 
-    // Getters and Setters
     public String getTitle() {
         return title;
     }
