@@ -18,18 +18,3 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify({ token: token })
     }).then(response => console.log('Token stored:', response));
 });
-
-// Remove token when tab is closed
-window.addEventListener("beforeunload", function () {
-    const token = sessionStorage.getItem('apiToken');
-
-    if (token) {
-        fetch('/remove-token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token: token })
-        }).then(response => console.log('Token removed:', response));
-    }
-});
