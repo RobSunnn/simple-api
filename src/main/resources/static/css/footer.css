@@ -34,6 +34,15 @@ footer {
     margin-bottom: 2em;
 }
 
+.subscribe-form-and-btn input {
+    width: 30%;
+    background-color: white;
+}
+
+subscribe-form-and-btn {
+    display: flex;
+}
+
 .footer-copyright {
     font-size: 14px;
     margin-top: 30px;

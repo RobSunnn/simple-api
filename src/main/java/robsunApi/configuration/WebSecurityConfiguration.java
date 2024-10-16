@@ -27,7 +27,8 @@ public class WebSecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/users/register", "/users/login",
                                 "/users/login-error", "/sendMail", "/fact", "/hobby", "/quote", "/weather",
-                                "/store-token", "/remove-token", "/about", "/contact", "/blog/**", "/error").permitAll()
+                                "/store-token", "/remove-token", "/about", "/contact", "/blog/**", "/error",
+                                "/add-subscriber").permitAll()
                         .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated()
                 )
