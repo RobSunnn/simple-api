@@ -91,6 +91,28 @@ img, video {
     align-items: center;
 }
 
+.popup {
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    font-size: 18px;
+}
+
+.popup.error {
+    background-color: #f44336; /* Red for error */
+}
+
+.popup.success {
+    background-color: #4caf50; /* Green for success */
+}
+
 @media (max-height: 992px) {
     body {
         align-items: flex-start;

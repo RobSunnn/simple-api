@@ -6,12 +6,15 @@
         </div>
         <div class="subscribe-wrapper">
             <h3>Subscribe to our newsletter</h3>
-            <form class="subscribe-form-and-btn" th:action="@{/add-subscriber}" th:method="POST">
-                <label for="subscribe-form"></label>
-                <input type="text" name="subscriberEmail" id="subscribe-form">
+            <form class="subscribe-form-and-btn" id="subscribe-form">
+                <label for="subscriber-email"></label>
+                <input type="text" id="subscriber-email" required minlength="5" maxlength="100"
+                       pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
+                <div id="error-message" class="invalid-feedback text-white bg-danger rounded"></div>
                 <button type="submit" class="btn btn-success">Subscribe</button>
             </form>
         </div>
         <p class="footer-copyright">© 2024 All rights reserved.</p>
     </div>
+    <script type="text/javascript" src="/js/subscribe.js"></script>
 </footer>
