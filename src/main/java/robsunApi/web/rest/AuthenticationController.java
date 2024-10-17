@@ -33,14 +33,11 @@ public class AuthenticationController {
         return new ModelAndView("login");
     }
 
-    @PostMapping("/login-error")
-    public String onFailure(@ModelAttribute("email") String email,
-                            Model model) {
-
-        model.addAttribute(String.valueOf(EMAIL), email);
-//        model.addAttribute(BAD_CREDENTIALS, "true");
-
-        return "login";
+    @PostMapping(value = "/login-error", produces = "text/html")
+    public ModelAndView onFailure(@ModelAttribute("email") String email, Model model) {
+        model.addAttribute("email", email);
+        model.addAttribute("errorMessage", "Invalid email or password. Please try again.");
+        return new ModelAndView("login");
     }
 
     @PreAuthorize("isAnonymous()")
@@ -55,15 +52,6 @@ public class AuthenticationController {
             @RequestBody @Valid UserRegisterBM userRegisterBM,
             BindingResult bindingResult
     ) {
-        if (bindingResult.hasErrors()) {
-            Map<String, Object> errors = new HashMap<>();
-            errors.put("errors", bindingResult.getAllErrors());
-            return ResponseEntity.badRequest().body(errors);
-        }
-
-        authenticationService.registerUser(userRegisterBM);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User registered successfully");
-        return ResponseEntity.ok(response);
+        return authenticationService.registerUser(userRegisterBM, bindingResult);
     }
 }

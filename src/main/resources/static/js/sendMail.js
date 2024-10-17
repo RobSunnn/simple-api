@@ -1,4 +1,6 @@
-document.addEventListener('submit', sendMail);
+let sendMailForm = document.getElementById("send-mail-form");
+
+sendMailForm.addEventListener('submit', sendMail);
 
 async function sendMail(e) {
     e.preventDefault();

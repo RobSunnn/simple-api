@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Endpoints</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar Fragment -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<!-- Main Content -->
+<section class="container my-5">
+    <h1 class="text-center">API Endpoints</h1>
+    <p class="lead text-center">Below is a list of available API endpoints. Click on each card for more details.</p>
+    <div class="row">
+        <!-- Fact Endpoint Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">GET /fact</h5>
+                    <p class="card-text">Fetch a random fact.</p>
+                    <a href="/api/fact" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Endpoint Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">GET /users</h5>
+                    <p class="card-text">Retrieve a list of users.</p>
+                    <a href="/api/users" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more endpoint cards here -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">POST /users</h5>
+                    <p class="card-text">Create a new user.</p>
+                    <a href="/api/users/create" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">GET /users/{id}</h5>
+                    <p class="card-text">Fetch details of a specific user.</p>
+                    <a href="/api/users/{id}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">DELETE /users/{id}</h5>
+                    <p class="card-text">Delete a user.</p>
+                    <a href="/api/users/delete/{id}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Fragment -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

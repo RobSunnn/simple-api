@@ -1,10 +1,13 @@
 package robsunApi.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import robsunApi.domain.entity.TokenEntity;
 import robsunApi.domain.entity.UserEntity;
 import robsunApi.domain.entity.enums.RoleEnum;
@@ -13,6 +16,8 @@ import robsunApi.domain.model.view.UserView;
 import robsunApi.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -30,7 +35,22 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(UserRegisterBM userRegisterBM) {
+    public ResponseEntity<?> registerUser(UserRegisterBM userRegisterBM, BindingResult bindingResult) {
+
+        if (!userRegisterBM.password().equals(userRegisterBM.confirmPassword())) {
+            bindingResult.addError(new FieldError("PasswordMismatch", "confirmPassword", "Passwords do not match!"));
+        }
+
+        if (userRepository.findByEmail(userRegisterBM.email()).isPresent()) {
+            bindingResult.addError(new FieldError("EmailExists", "email", "Email is occupied!"));
+        }
+
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> errors = new HashMap<>();
+            errors.put("errors", bindingResult.getAllErrors());
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         UserEntity user = mapToUser(userRegisterBM);
         String userToken = generateUserToken(); // Generate a user token
         user.setApiToken(userToken); // Set the generated token to the user entity
@@ -45,6 +65,10 @@ public class AuthenticationService {
         }
 
         userRepository.save(user);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User registered successfully");
+        return ResponseEntity.ok(response);
     }
 
 
@@ -61,7 +85,6 @@ public class AuthenticationService {
                 .setUsername(userRegisterBM.username())
                 .setEmail(userRegisterBM.email())
                 .setPassword(passwordEncoder.encode(userRegisterBM.password()))
-                .setApiToken(UUID.randomUUID().toString())
                 .setCreated(LocalDateTime.now());
     }
 

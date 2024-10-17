@@ -13,7 +13,7 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="wrapper">
-    <form th:action="@{/users/login}" method="post">
+    <form class="login-form" th:action="@{/users/login}" method="post">
         <h1>Login</h1>
         <div>
             <label for="email">Email:</label>
@@ -22,6 +22,9 @@
         <div class="mb-3">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+        </div>
+        <div th:if="${errorMessage}">
+            <p style="color: red;" th:text="${errorMessage}"></p>
         </div>
         <div>
             <button type="submit">Login</button>

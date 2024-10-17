@@ -28,7 +28,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/", "/users/register", "/users/login",
                                 "/users/login-error", "/sendMail", "/fact", "/hobby", "/quote", "/weather",
                                 "/store-token", "/remove-token", "/about", "/contact", "/blog/**", "/error",
-                                "/add-subscriber").permitAll()
+                                "/add-subscriber", "/docs", "/api-endpoints").permitAll()
                         .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated()
                 )

@@ -16,7 +16,7 @@ public class WeatherService {
     public static String getWeatherInfo(String city) {
 
         String key = System.getenv("WEATHER_KEY");
-        final Logger log = LoggerFactory.getLogger(FactService.class);
+        final Logger log = LoggerFactory.getLogger(WeatherService.class);
 
         String weatherUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
                 + city + "?unitGroup=us&key=" + key + "&contentType=json&iconSet=icons2";
