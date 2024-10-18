@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import robsunApi.domain.model.CityRequest;
 import robsunApi.service.TokenService;
+import robsunApi.util.response.ResponseUtil;
 
 import static robsunApi.service.WeatherService.getWeatherInfo;
 
@@ -20,15 +21,14 @@ public class WeatherController {
     }
 
     @PostMapping("/weather")
-    public ResponseEntity<String> getWeather(@RequestHeader("x-api-token") String token, @RequestBody CityRequest cityRequest) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            String city = cityRequest.getCity();
-            String weatherData = getWeatherInfo(city);
-            return ResponseEntity.ok(weatherData);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+    public ResponseEntity<?> getWeather(@RequestHeader("x-api-token") String token, @RequestBody CityRequest cityRequest) {
+        if (!tokenService.isValidToken(token)) {
+            return ResponseUtil.errorResponse(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
+
+        String city = cityRequest.getCity();
+        String weatherData = getWeatherInfo(city);
+        return ResponseEntity.ok(weatherData);
     }
 }
 

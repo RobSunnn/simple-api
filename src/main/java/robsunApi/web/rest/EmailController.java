@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import robsunApi.domain.model.EmailRequest;
 import robsunApi.service.EmailService;
 import robsunApi.service.TokenService;
+import robsunApi.util.response.ResponseUtil;
 
 @RestController
 public class EmailController {
@@ -21,12 +22,11 @@ public class EmailController {
     }
     @PostMapping("/sendMail")
     public ResponseEntity<?> sendEmail(@RequestHeader("x-api-token") String token, @RequestBody EmailRequest emailRequest) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            emailService.sendContactForm(emailRequest.getName(), emailRequest.getUserEmail(), emailRequest.getMessageContent());
-            return ResponseEntity.ok("Email sent successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        if (!tokenService.isValidToken(token)) {
+            return ResponseUtil.errorResponse(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
+
+        emailService.sendContactForm(emailRequest.getName(), emailRequest.getUserEmail(), emailRequest.getMessageContent());
+        return ResponseEntity.ok("Email sent successfully!");
     }
 }

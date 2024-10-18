@@ -15,6 +15,10 @@ a:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+.features {
+    margin: 0 auto;
+}
+
 .welcome {
     max-width: 600px;
 }

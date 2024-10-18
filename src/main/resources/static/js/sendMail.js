@@ -31,7 +31,7 @@ async function sendMail(e) {
 
     try {
         // Make the API request to send the email
-        const response = await fetch('https://robsunnn-api.azurewebsites.net/sendMail', {
+        const response = await fetch('/sendMail', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

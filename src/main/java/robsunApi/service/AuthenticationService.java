@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static robsunApi.util.response.ResponseUtil.genericFailResponse;
+
 @Service
 public class AuthenticationService {
 
@@ -46,9 +48,7 @@ public class AuthenticationService {
         }
 
         if (bindingResult.hasErrors()) {
-            Map<String, Object> errors = new HashMap<>();
-            errors.put("errors", bindingResult.getAllErrors());
-            return ResponseEntity.badRequest().body(errors);
+            return genericFailResponse(bindingResult);
         }
 
         UserEntity user = mapToUser(userRegisterBM);

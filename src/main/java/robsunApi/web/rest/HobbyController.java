@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import robsunApi.service.TokenService;
+import robsunApi.util.response.ResponseUtil;
 
 import static robsunApi.service.HobbyGenerator.giveIdeaForHobby;
 
@@ -19,12 +20,11 @@ public class HobbyController {
 
     @GetMapping("/hobby")
     public ResponseEntity<?> getHobby(@RequestHeader("x-api-token") String token) {
-        if (tokenService.isValidToken(token)) {
-            // Proceed with request processing if token is valid
-            return ResponseEntity.ok(giveIdeaForHobby());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        if (!tokenService.isValidToken(token)) {
+            return ResponseUtil.errorResponse(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
+
+        return ResponseEntity.ok(giveIdeaForHobby());
     }
 
 }

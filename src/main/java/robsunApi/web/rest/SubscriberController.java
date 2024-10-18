@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import robsunApi.domain.model.binding.SubscriberBindingModel;
 import robsunApi.service.SubscriberService;
 import robsunApi.service.TokenService;
+import robsunApi.util.response.ResponseUtil;
 
 @RestController
 public class SubscriberController {
@@ -28,11 +29,11 @@ public class SubscriberController {
             @Valid SubscriberBindingModel subscriberBindingModel,
             BindingResult bindingResult
     ) {
-        if (tokenService.isValidToken(token)) {
-            return subscriberService.addNewSubscriber(subscriberBindingModel, bindingResult);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong, please try again.");
+        if (!tokenService.isValidToken(token)) {
+            return ResponseUtil.errorResponse(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
+
+        return subscriberService.addNewSubscriber(subscriberBindingModel, bindingResult);
     }
 
 }

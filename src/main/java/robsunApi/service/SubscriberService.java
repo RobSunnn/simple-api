@@ -11,8 +11,8 @@ import robsunApi.repository.SubscriberRepository;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static robsunApi.util.ResponseUtil.genericFailResponse;
-import static robsunApi.util.ResponseUtil.genericSuccessResponse;
+import static robsunApi.util.response.ResponseUtil.genericFailResponse;
+import static robsunApi.util.response.ResponseUtil.genericSuccessResponse;
 
 @Service
 public class SubscriberService {

@@ -1,5 +1,6 @@
-package robsunApi.util;
+package robsunApi.util.response;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ResponseUtil {
     private static final String FIELD = "field";
@@ -20,9 +22,18 @@ public class ResponseUtil {
     }
 
     public static ResponseEntity<?> genericFailResponse(BindingResult bindingResult) {
+        List<Map<String, String>> errors = bindingResult.getFieldErrors().stream().map(error -> {
+            Map<String, String> errorDetails = new HashMap<>();
+            errorDetails.put("field", error.getField());
+            errorDetails.put("message", error.getDefaultMessage());
+            return errorDetails;
+        }).collect(Collectors.toList());
+
         Map<String, Object> response = new HashMap<>();
-        response.put("success", false);
-        response.put("errors", bindingResult.getAllErrors());
+        response.put("status", 400);  // Add status code
+        response.put("message", "Validation failed");
+        response.put("errors", errors);  // Add the array of errors
+
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -40,5 +51,14 @@ public class ResponseUtil {
 
         response.put("errors", errors);
         return ResponseEntity.badRequest().body(response);
+    }
+
+    public static ResponseEntity<ErrorResponse> errorResponse(HttpStatus status, String message) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                status.value(),
+                message,
+                status.getReasonPhrase()
+        );
+        return ResponseEntity.status(status).body(errorResponse);
     }
 }
