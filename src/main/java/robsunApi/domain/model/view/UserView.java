@@ -3,7 +3,8 @@ package robsunApi.domain.model.view;
 public record UserView(
         String username,
         String email,
-        String apiToken
+        String apiToken,
+        int apiCalls
 ) {
 
     @Override
@@ -19,5 +20,10 @@ public record UserView(
     @Override
     public String apiToken() {
         return apiToken;
+    }
+
+    @Override
+    public int apiCalls() {
+        return apiCalls;
     }
 }

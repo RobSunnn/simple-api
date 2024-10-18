@@ -8,22 +8,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-
 <body>
-
 <!-- Navbar Fragment -->
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-
 <!-- Hero Section -->
 <div class="container text-center py-5">
     <h1 class="text-white">Welcome to My Simple API</h1>
     <p class="lead text-white">Powerful, secure, and fast API solutions. Register or login to explore more!</p>
-
     <div sec:authorize="isAnonymous()" class="buttons mb-4">
         <a href="/users/register" class="btn btn-primary btn-lg mx-2">Register</a>
         <a href="/users/login" class="btn btn-outline-light btn-lg mx-2">Login</a>
     </div>
-
     <div sec:authorize="isAuthenticated()">
         <h2 class="text-white">Welcome back, <span class="text-white"><th:block
                 th:text="${#authentication.principal.name}"></th:block></span>!
@@ -31,7 +26,6 @@
         <p class="text-white">Explore the API below:</p>
     </div>
 </div>
-
 <!-- Features Section -->
 <section class="features bg-dark text-white py-5">
     <div class="container">
@@ -54,7 +48,6 @@
         </div>
     </div>
 </section>
-
 <!-- Live API Tryout Section -->
 <section class="container my-5">
     <h2 class="text-center text-white">Try the API Live</h2>
@@ -73,14 +66,13 @@
         </div>
     </div>
 </section>
-
 <section class="container py-5 text-center">
     <h2 class="text-center text-white">Example API Requests</h2>
     <p class="text-center text-white">Use these example requests to get started quickly:</p>
     <br><br><br>
     <h3 class="text-white">JavaScript example</h3>
     <pre class="bg-dark text-white p-3 rounded">
-fetch('/fact', {
+fetch('/quote', {
     method: 'GET',
     headers: {
         'x-api-token': 'your-api-token-here'
@@ -90,59 +82,12 @@ fetch('/fact', {
     .then(data => console.log(data));
     </pre>
 </section>
-
-
 <!-- Footer Fragment -->
 <div th:replace="~{fragments/footer :: footer}"></div>
-
 <!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/token.js"></script>
-
 <!-- API Fetch Script -->
-<script>
-    document.getElementById('api-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        const token = sessionStorage.getItem('apiToken');
-
-        document.getElementById('response-container').style.display = 'block';
-        document.getElementById('response-output').innerHTML = 'Loading...';
-
-        // Make the API request with the token in headers
-        fetch(`/quote`, {
-            method: 'GET',
-            headers: {
-                'x-api-token': token  // Add the token to the header
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-                return response.json();  // Expect a JSON response
-            })
-            .then(data => {
-                const responseOutput = document.getElementById('response-output');
-
-                if (data) {
-                    // Clear any previous content
-                    responseOutput.textContent = '';
-
-                    // Create a <pre> element for pretty-printing
-                    const preElement = document.createElement('pre');
-                    preElement.textContent = JSON.stringify(data, null, 2);  // Pretty-print JSON
-                    responseOutput.appendChild(preElement);  // Append it to the output div
-                } else {
-                    // Handle the case where no fact is returned
-                    responseOutput.textContent = 'No facts found.';
-                }
-            })
-            .catch(error => {
-                // Handle errors and display a message
-                document.getElementById('response-output').innerHTML = `Error: ${error.message}`;
-            });
-    });
-</script>
-
+<script src="/js/homePage.js"></script>
 </body>
 </html>

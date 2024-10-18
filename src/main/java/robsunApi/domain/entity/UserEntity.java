@@ -20,9 +20,6 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String apiToken;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -30,17 +27,19 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private List<RoleEntity> roles;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private TokenEntity token;
+
     @Column(nullable = false)
     private LocalDateTime created;
 
     public UserEntity() {
     }
 
-    public UserEntity(String username, String email, String password, String apiToken) {
+    public UserEntity(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.apiToken = apiToken;
     }
 
     public String getUsername() {
@@ -70,21 +69,21 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public String getApiToken() {
-        return apiToken;
-    }
-
-    public UserEntity setApiToken(String apiToken) {
-        this.apiToken = apiToken;
-        return this;
-    }
-
     public List<RoleEntity> getRoles() {
         return roles;
     }
 
     public UserEntity setRoles(List<RoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public TokenEntity getToken() {
+        return token;
+    }
+
+    public UserEntity setToken(TokenEntity token) {
+        this.token = token;
         return this;
     }
 

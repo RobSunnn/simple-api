@@ -23,7 +23,7 @@
         <div class="input-field form-group">
             <label for="email" class="text-center">Email address</label>
             <input type="email" name="email" class="form-control" id="email"
-                   placeholder="Enter your email..." minlength="5" maxlength="20" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
+                   placeholder="Enter your email..." minlength="5" maxlength="200" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
             <small id="emailError" class="invalid-feedback text-white bg-danger rounded"></small>
         </div>
         <div class="input-field form-group">
@@ -48,6 +48,9 @@
 <script>
     document.getElementById("register-form").addEventListener("submit", (e) => {
         e.preventDefault();
+
+        const submitButton = document.getElementById('register-button');
+        submitButton.disabled = true;
 
         const userRegisterBM = {
             username: document.getElementById('username').value,

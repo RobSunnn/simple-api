@@ -16,5 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ token: token })
-    }).then(response => console.log('Token stored:', response));
+    }).then(() => {
+
+    });
 });

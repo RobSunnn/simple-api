@@ -18,27 +18,40 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
-    public void addToken(String token) {
+    public void addGuestToken(String token) {
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setToken(token);
         tokenEntity.setCreatedAt(LocalDateTime.now());
         tokenEntity.setExpirationTime(LocalDateTime.now().plusMinutes(30));
-        tokenEntity.setGuest(true);
         tokenRepository.save(tokenEntity);
     }
 
-    public void addToken(TokenEntity tokenEntity) {
+    public void addUserToken(TokenEntity tokenEntity) {
         tokenRepository.save(tokenEntity);
     }
 
     public boolean isValidToken(String token) {
-        Optional<TokenEntity> tokenEntity = tokenRepository.findByToken(token);
-        return tokenEntity.isPresent() && (!tokenEntity.get().isGuest() || !tokenEntity.get().isExpired());
+        Optional<TokenEntity> tokenOptional = tokenRepository.findByToken(token);
+        if (tokenOptional.isPresent()) {
+            TokenEntity tokenEntity = tokenOptional.get();
+            if (tokenEntity.getUser() != null && !tokenEntity.isExpired()) {
+                tokenEntity.setApiCalls(tokenEntity.getApiCalls() + 1);
+                tokenRepository.save(tokenEntity);
+                return true;
+            }
+            return tokenEntity.getUser() == null && !tokenEntity.isExpired(); // Valid token without a user
+        }
+        return false;
+    }
+
+    public int getApiCallsForUser(String apiToken) {
+        Optional<TokenEntity> tokenEntity = tokenRepository.findByToken(apiToken);
+        return tokenEntity.map(TokenEntity::getApiCalls).orElse(0);
     }
 
     @Scheduled(fixedRate = 3600000) // Runs every hour
     public void cleanupExpiredTokens() {
-        List<TokenEntity> expiredTokens = tokenRepository.findAllByIsGuestTrueAndExpirationTimeBefore(LocalDateTime.now());
+        List<TokenEntity> expiredTokens = tokenRepository.findAllByUserIsNullAndExpirationTimeBefore(LocalDateTime.now());
         tokenRepository.deleteAll(expiredTokens); // Delete all expired guest tokens
     }
 }
