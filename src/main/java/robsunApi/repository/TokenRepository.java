@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
     Optional<TokenEntity> findByToken(String token);
-    List<TokenEntity> findAllByIsGuestTrueAndExpirationTimeBefore(LocalDateTime now);
+    List<TokenEntity> findAllByUserIsNullAndExpirationTimeBefore(LocalDateTime expirationTime);
 }

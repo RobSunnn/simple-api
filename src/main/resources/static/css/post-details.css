@@ -1,0 +1,35 @@
+.article-wrapper {
+    max-width: 800px;
+    margin: 5em auto;
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.post-image {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.post-image img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.back-link a {
+    color: black;
+    padding: 0.3em 0.6em;
+    margin: 0.5rem;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}

@@ -52,8 +52,6 @@ public class AuthenticationService {
         }
 
         UserEntity user = mapToUser(userRegisterBM);
-        String userToken = generateUserToken(); // Generate a user token
-        user.setApiToken(userToken); // Set the generated token to the user entity
 
         if (roleService.getCount() == 0) {
             roleService.initRoles();
@@ -65,6 +63,7 @@ public class AuthenticationService {
         }
 
         userRepository.save(user);
+        tokenService.addUserToken(user.getToken());
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "User registered successfully");
@@ -81,26 +80,33 @@ public class AuthenticationService {
     }
 
     private UserEntity mapToUser(UserRegisterBM userRegisterBM) {
-        return new UserEntity()
+        TokenEntity userToken = generateUserToken();
+
+        UserEntity userEntity = new UserEntity()
                 .setUsername(userRegisterBM.username())
                 .setEmail(userRegisterBM.email())
                 .setPassword(passwordEncoder.encode(userRegisterBM.password()))
+                .setToken(userToken)
                 .setCreated(LocalDateTime.now());
+
+        userToken.setUser(userEntity);
+
+        return userEntity;
     }
 
-    private String generateUserToken() {
+    private TokenEntity generateUserToken() {
         String token = UUID.randomUUID().toString();
         TokenEntity tokenEntity = new TokenEntity();
         tokenEntity.setToken(token);
         tokenEntity.setCreatedAt(LocalDateTime.now());
-        tokenEntity.setGuest(false);
-        tokenService.addToken(tokenEntity);
-        return token;
+
+        return tokenEntity;
     }
 
 
     private UserView mapAsUserView(UserEntity user) {
-        return new UserView(user.getUsername(), user.getEmail(), user.getApiToken());
+        int apiCalls = tokenService.getApiCallsForUser(user.getToken().getToken());
+        return new UserView(user.getUsername(), user.getEmail(), user.getToken().getToken(), apiCalls);
     }
 
     private UserEntity findUser(String email) {

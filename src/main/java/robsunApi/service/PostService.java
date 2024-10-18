@@ -9,7 +9,7 @@ import robsunApi.domain.model.view.PostView;
 import java.util.List;
 
 public interface PostService {
-    PostEntity createPost(PostBindingModel postBindingModel);
+    boolean createPost(PostBindingModel postBindingModel);
 
     Page<PostEntity> getAllApprovedPosts(Pageable pageable);
 

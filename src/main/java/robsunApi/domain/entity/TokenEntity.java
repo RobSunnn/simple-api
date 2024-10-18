@@ -1,6 +1,8 @@
 package robsunApi.domain.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
@@ -12,14 +14,14 @@ public class TokenEntity extends BaseEntity {
     private String token;
     private LocalDateTime createdAt;
     private LocalDateTime expirationTime;
-    private boolean isGuest;
 
-    public TokenEntity(){
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-    }
+    private int apiCalls;
 
-    public TokenEntity(String token) {
-        this.token = token;
+    public TokenEntity() {
     }
 
     public String getToken() {
@@ -39,14 +41,6 @@ public class TokenEntity extends BaseEntity {
         this.createdAt = createdAt;
     }
 
-    public boolean isGuest() {
-        return isGuest;
-    }
-
-    public void setGuest(boolean guest) {
-        isGuest = guest;
-    }
-
     public LocalDateTime getExpirationTime() {
         return expirationTime;
     }
@@ -55,7 +49,23 @@ public class TokenEntity extends BaseEntity {
         this.expirationTime = expirationTime;
     }
 
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public int getApiCalls() {
+        return apiCalls;
+    }
+
+    public void setApiCalls(int apiCalls) {
+        this.apiCalls = apiCalls;
+    }
+
     public boolean isExpired() {
-        return isGuest && LocalDateTime.now().isAfter(expirationTime);
+        return expirationTime != null && LocalDateTime.now().isAfter(expirationTime);
     }
 }

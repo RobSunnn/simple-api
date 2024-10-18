@@ -30,7 +30,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostEntity createPost(PostBindingModel postBindingModel) {
+    public boolean createPost(PostBindingModel postBindingModel) {
         PostEntity post = new PostEntity();
         post.setTitle(postBindingModel.getTitle());
         post.setContent(postBindingModel.getContent());
@@ -38,15 +38,17 @@ public class PostServiceImpl implements PostService {
 
         MultipartFile file = postBindingModel.getFile();
 
+        // Validate file
         if (file == null || file.isEmpty()) {
-            throw new IllegalArgumentException("File must not be empty. Please upload an image.");
+            return false; // Invalid file input, return false
         }
 
         if (file.getSize() > 5 * 1024 * 1024) { // 5MB size limit
-            throw new IllegalArgumentException("File size exceeds the maximum limit of 5MB.");
+            return false; // File size exceeds limit, return false
         }
 
         try {
+            // Create and save image entity
             ImageEntity image = new ImageEntity();
             image.setFileName(file.getOriginalFilename());
             image.setFileType(file.getContentType());
@@ -57,11 +59,14 @@ public class PostServiceImpl implements PostService {
 
             post.setImage(image);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to store file " + file.getOriginalFilename(), e);
+            // Log the error if necessary
+            return false; // Return false on failure to process image
         }
 
-        return postRepository.save(post);
+        postRepository.save(post);
+        return true; // Return true if the post is successfully created
     }
+
 
     @Override
     public Page<PostEntity> getAllApprovedPosts(Pageable pageable) {

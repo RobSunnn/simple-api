@@ -20,7 +20,7 @@ public class TokenController {
     @PostMapping("/store-token")
     public ResponseEntity<?> storeToken(@RequestBody Map<String, String> body) {
         String token = body.get("token");
-        tokenService.addToken(token); // Add token to the service
+        tokenService.addGuestToken(token); // Add token to the service
         return ResponseEntity.ok("Token stored successfully.");
     }
 }
